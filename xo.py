@@ -28,8 +28,11 @@ def switchcase(name):
     
     player = name.split(",")
     players = player[-1]
-    print("players: ", players)
-    position = input(player[0] + " please enter position: TL, TM, TR, ML, MM, MR, BL, BM, BR: ")
+    if name != "Computer":
+        position = input(player[0] + " please enter position: TL, TM, TR, ML, MM, MR, BL, BM, BR: ")
+    else:
+        
+        position 
    
     #  TL, TM, TR, ML, MM, MR, BL, BM, BR
     if  position == "TL" or position == "tl":
@@ -90,20 +93,48 @@ def switchcase(name):
         print("Invalid choice, please choose again")
         return
 
-def checkwin(player):
-    if player == "player1":
-        # 00, 01, 02
-        # 10, 11, 12
-        # 20, 21, 22
-        # 00, 11, 22
-        # 20, 11, 02
-        # 00, 10, 20
-        # 10, 11, 12
-        # 20, 21, 22
-        
-        print()       
+def checkwin(players):
+    play = players.split(",")
+    player = play[-1]
+    # print(play[0])
+    if player == "player1":        
+        for row in array:
+            if row.count(row[0]) == len(row) and row[0] != ' ':
+                print(play[0], "wins!!!")
+                return True
+
+        for col in range(len(array[0])):
+            if array[0][col] == array[1][col] == array[2][col] and array[0][col] != ' ':
+                print(play[0], "wins!!!")
+                return True
+
+        # Check diagonals
+        if array[0][0] == array[1][1] == array[2][2] and array[0][0] != ' ':
+            print(play[0], "wins!!!")
+            return True
+        if array[0][2] == array[1][1] == array[2][0] and array[0][2] != ' ':
+            print(play[0], "wins!!!")
+            return True   
     else:
-        print()
+        for row in array:
+            if row.count(row[0]) == len(row) and row[0] != ' ':
+                print(play[0], "wins!!!")
+                return True
+
+        for col in range(len(array[0])):
+            if array[0][col] == array[1][col] == array[2][col] and array[0][col] != ' ':
+                print(play[0], "wins!!!")
+                return True
+
+        # Check diagonals
+        if array[0][0] == array[1][1] == array[2][2] and array[0][0] != ' ':
+            print(play[0], "wins!!!")
+            return True
+        if array[0][2] == array[1][1] == array[2][0] and array[0][2] != ' ':
+            print(play[0], "wins!!!")
+            return True
+        
+    return False
 
 def playGame():
     player1 = input("Please enter your name: ")
@@ -136,10 +167,13 @@ def playGame():
     while(True):
         player1 = player1+ ",player1"
         switchcase(player1)
-        checkwin("player1")
+        if checkwin(player1):
+            return
         player2 = player2+ ",player2"
         switchcase(player2)
-        checkwin("player2")
+        if checkwin(player2):
+            return
+    return
            
 
 def main():
