@@ -8,8 +8,16 @@ root.title("XO's")
 # Variables to store player names
 player1_name = StringVar()
 player2_name = StringVar()
+current_player = StringVar(value="X")
+array = [[" " for _ in range(3)] for _ in range(3)]
+buttons = []
+
 
 def show_game_page():
+    global buttons, array
+    array = [[" " for _ in range(3)] for _ in range(3)]
+    buttons = []
+    
     # Hide main page frame
     frm.grid_forget()
     
@@ -17,19 +25,62 @@ def show_game_page():
     game_frm = ttk.Frame(root, padding=100)
     game_frm.grid()
     
+    msg_text = Text(game_frm)
+    
     # Add widgets for the game page
     ttk.Label(game_frm, text=f"{player1_name.get()} (X) vs {player2_name.get()} (O)").grid(row=0, columnspan=3)
 
-
     for i in range(3):
+        row_buttons = []
         for j in range(3):
-            ttk.Button(game_frm, text=" ", width=5, command=lambda row=i, col=j: on_click(row, col)).grid(row=i+1, column=j, padx=5, pady=5)
+            btn = ttk.Button(game_frm, text=" ", width=5, command=lambda row=i, col=j: on_click(row, col))
+            btn.grid(row=i+1, column=j, padx=5, pady=5)
+            row_buttons.append(btn)
+        buttons.append(row_buttons)
 
-    ttk.Button(game_frm, text="Quit?", command=root.destroy).grid(row=4, columnspan=3)
+    ttk.Button(game_frm, text="Quit", command=root.destroy).grid(row=4, columnspan=3)
 
 
 def on_click(row, col):
-    print(f"Button clicked at row {row}, column {col}")
+    if array[row][col] == " ":
+        array[row][col] = current_player.get()
+        buttons[row][col].config(text=current_player.get())
+        
+        if checkwin(current_player.get()):
+            print(f"{current_player.get()} wins!!!")
+            msg_text.insert(END,f"{current_player.get()} wins.\n")
+            
+            for row_buttons in buttons:
+                for btn in row_buttons:
+                    btn.config(state="disabled")
+        else:
+            switch_player()
+    else:
+        print("This spot is already taken")
+
+
+def switch_player():
+    if current_player.get() == "X":
+        current_player.set("O")
+    else:
+        current_player.set("X")
+
+
+def checkwin(player):
+    for row in array:
+        if row.count(row[0]) == len(row) and row[0] != ' ':
+            return True
+
+    for col in range(len(array[0])):
+        if array[0][col] == array[1][col] == array[2][col] and array[0][col] != ' ':
+            return True
+
+    if array[0][0] == array[1][1] == array[2][2] and array[0][0] != ' ':
+        return True
+    if array[0][2] == array[1][1] == array[2][0] and array[0][2] != ' ':
+        return True
+
+    return False
 
 
 def show_main_page():
