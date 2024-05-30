@@ -1,6 +1,14 @@
 from tkinter import *
 from tkinter import ttk
 
+# Initialize the root window
+root = Tk()
+root.title("XO's")
+
+# Variables to store player names
+player1_name = StringVar()
+player2_name = StringVar()
+
 def show_game_page():
     # Hide main page frame
     frm.grid_forget()
@@ -10,7 +18,8 @@ def show_game_page():
     game_frm.grid()
     
     # Add widgets for the game page
-    ttk.Label(game_frm, text="Player 1").grid(row=0, columnspan=3)
+    ttk.Label(game_frm, text=f"{player1_name.get()} (X) vs {player2_name.get()} (O)").grid(row=0, columnspan=3)
+
 
     for i in range(3):
         for j in range(3):
@@ -32,12 +41,13 @@ def show_main_page():
     
     # Add widgets for the main page
     ttk.Label(frm, text="Please enter a name player 1: ").grid(column=0, row=0)
+    ttk.Entry(frm, textvariable=player1_name).grid(column=1, row=0)
     ttk.Label(frm, text="Please enter a name player 2: ").grid(column=0, row=1)
+    ttk.Entry(frm, textvariable=player2_name).grid(column=1, row=1)
     ttk.Button(frm, text="Quit", command=root.destroy).grid(column=0, row=2, sticky="sw")
     ttk.Button(frm, text="Let the games begin!", command=show_game_page).grid(column=1, row=2, sticky="se")
 
-root = Tk()
-root.title("XO's")
+
 frm = ttk.Frame(root, padding=100)
 frm.grid()
 

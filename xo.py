@@ -1,3 +1,5 @@
+import random
+
 # Define the number of rows and columns
 num_rows = 3
 num_columns = 3
@@ -30,9 +32,10 @@ def switchcase(name):
     players = player[-1]
     if name != "Computer":
         position = input(player[0] + " please enter position: TL, TM, TR, ML, MM, MR, BL, BM, BR: ")
-    else:
-        
-        position 
+    else:  
+        enter = ["TL", "TM", "TR", "ML", "MM", "MR", "BL", "BM", "BR"]  
+        position = random.choice(enter)
+        print("Random position: ", position)
    
     #  TL, TM, TR, ML, MM, MR, BL, BM, BR
     if  position == "TL" or position == "tl":
@@ -146,22 +149,6 @@ def playGame():
         player2 = input("Please enter name of player 2: ")
     else :
         player2 = "Computer"
-        
-    print()
-    print("Let the games begin!!!")
-    print("TL = Top left")
-    print("TM = Top middle")
-    print("TR = Top right")
-    
-    print("ML = Top left")
-    print("MM = Top middle")
-    print("MR = Top right")
-    
-    print("BL = Top left")
-    print("BM = Top middle")
-    print("BR = Top right")
-    
-    print()
     
     # Needs to alternate between player 1 and player 2
     while(True):
@@ -176,11 +163,8 @@ def playGame():
     return
            
 
-def main():
-    
-    playGame()      
-    # printBoard()
-    
+def main():   
+    playGame()          
     
     
 if __name__ == "__main__":
